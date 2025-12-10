@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: deep-agent-demo
+
+server:
+  port: 8080
+
+agent:
+  max-iterations: 10
+  quality-threshold: 0.75
+
+logging:
+  level:
+    com.example.deepagent: INFO
