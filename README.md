@@ -2,19 +2,24 @@
 
 A minimal but complete Deep Agent system using Java 21 and Spring Boot 3.x that demonstrates the core concepts of LangGraph: stateful agents, multi-step reasoning, and self-correction.
 
-## Project Status: PR1 - Foundation with Mock Agent ✅
+## Project Status: PR2 - LLM Integration ✅
 
-This is **PR1** of the implementation plan. Currently includes:
+This is **PR2** of the implementation plan. Currently includes:
 - ✅ Complete Spring Boot application with Gradle
 - ✅ Stateful agent execution with Plan → Execute → Evaluate → Finish flow
-- ✅ Mocked behavior (no LLM yet - coming in PR2)
+- ✅ **Real LLM integration with OpenAI (GPT-4)** 🆕
+- ✅ **Intelligent planning, execution, and evaluation** 🆕
+- ✅ **Iterative reasoning with quality-based replanning** 🆕
 - ✅ REST API endpoint
+- ✅ Error handling with fallback behavior
 - ✅ Basic test coverage
 
 ## Technology Stack
 
 - **Java 21** - Latest LTS with modern features (records, pattern matching)
 - **Spring Boot 3.2.0** - Production-ready framework
+- **Spring AI 1.0.0-M3** - LLM integration framework 🆕
+- **OpenAI GPT-4** - Language model for reasoning 🆕
 - **Gradle with Kotlin DSL** - Modern build tool
 - **Lombok** - Reduce boilerplate
 - **JUnit 5** - Testing framework
@@ -24,6 +29,32 @@ This is **PR1** of the implementation plan. Currently includes:
 ### Prerequisites
 - Java 21 installed
 - Gradle 8.x installed (required for initial setup)
+- **OpenAI API Key** (required for LLM integration) 🆕
+
+### OpenAI API Key Setup 🆕
+
+You need an OpenAI API key to run the agent. Get one from [OpenAI Platform](https://platform.openai.com/api-keys).
+
+Set the API key as an environment variable:
+
+```bash
+# On Windows (PowerShell)
+$env:OPENAI_API_KEY="your-api-key-here"
+
+# On Windows (CMD)
+set OPENAI_API_KEY=your-api-key-here
+
+# On Linux/Mac
+export OPENAI_API_KEY="your-api-key-here"
+```
+
+Alternatively, update `src/main/resources/application.yml`:
+```yaml
+spring:
+  ai:
+    openai:
+      api-key: your-actual-api-key-here  # Not recommended for production!
+```
 
 ### Initial Setup
 
@@ -177,12 +208,7 @@ com.example.deepagent/
 
 ## What's Coming Next
 
-### PR2: LLM Integration (Real Intelligence)
-- Replace mocked behavior with OpenAI API calls
-- Spring AI integration for LLM operations
-- Real planning, execution, and evaluation
-
-### PR3: Persistence & State Management
+### PR3: Persistence & State Management (Next)
 - H2 database for checkpointing
 - Save/resume agent execution
 - Service layer for business logic
@@ -239,24 +265,30 @@ agent:
   quality-threshold: 0.75     # Quality threshold for completion
 ```
 
-## Current Limitations (PR1)
+## Current Capabilities (PR2) 🆕
 
-Since this is PR1 with mocked behavior:
-- Plans are hardcoded (always 3 generic steps)
-- Execution results are simulated
-- Quality score is fixed at 0.85
-- No actual reasoning or LLM integration
-- Always completes in 1 iteration
+The agent now has real intelligence:
+- ✅ **Dynamic Planning**: LLM generates custom 3-5 step plans based on queries
+- ✅ **Intelligent Execution**: Each step executed with context-aware reasoning
+- ✅ **Quality Evaluation**: LLM assesses answer quality (0.0-1.0 scale)
+- ✅ **Iterative Improvement**: Can replan if quality < 0.75 threshold
+- ✅ **Error Resilience**: Fallback behavior if LLM calls fail
+- ✅ **Configurable**: Adjustable quality threshold and max iterations
 
-These will be addressed in subsequent PRs!
+## Limitations (PR2)
+
+- No state persistence yet (coming in PR3)
+- Can't resume interrupted executions
+- No checkpointing between iterations
+- Limited observability (enhanced in PR5)
 
 ## Contributing
 
 This is an incremental implementation following a 5-PR plan. Each PR builds on the previous one:
-1. **PR1** (current): Foundation with mocked agent
-2. **PR2**: LLM integration
-3. **PR3**: Persistence
-4. **PR4**: Iteration logic
+1. **PR1** ✅: Foundation with mocked agent
+2. **PR2** ✅ (current): LLM integration
+3. **PR3** (next): Persistence
+4. **PR4**: Iteration logic enhancement
 5. **PR5**: Production features
 
 ## License
